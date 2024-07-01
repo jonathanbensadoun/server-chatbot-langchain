@@ -20,7 +20,7 @@ app.use(express.static('assets'));
 app.use(cors('*'));
 
 app.use(express.json());
-app.use(router)
+app.use('/api',router)
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
