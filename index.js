@@ -7,6 +7,7 @@ const cors = require('cors')
 const app = express();
 const PORT = process.env.PORT || 3000;
 const router = require('./app/routers/router');
+const URL_CORS = process.env.URL_CORS;
 
 app.use(express.urlencoded({extended: true}));
 
@@ -17,7 +18,7 @@ app.use(session({
 }));
 
 app.use(express.static('assets'));
-app.use(cors('*'));
+app.use(cors(URL_CORS));
 
 app.use(express.json());
 app.use('/api',router)

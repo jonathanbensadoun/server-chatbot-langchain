@@ -43,7 +43,7 @@ const getMessageHistory = async (sessionId) => {
     messages.slice(-MAX_HISTORY_LENGTH).forEach(msg => history.addMessage(msg));
   }
 
-  console.log(`Message history for session ${sessionId}:`, history.getMessages());
+  // console.log(`Message history for session ${sessionId}:`, history.getMessages());
   return history;
 };
 
@@ -59,7 +59,7 @@ const getResponseFromChatbot = async (req, res) => {
     const sessionId = req.body.sessionId;
     const userMessage = req.body.message;
 
-    console.log(`Received message: "${userMessage}" for session: ${sessionId}`);
+    // console.log(`Received message: "${userMessage}" for session: ${sessionId}`);
 
     const history = await getMessageHistory(sessionId);
     history.addMessage(new HumanMessage({ content: userMessage }));
@@ -74,17 +74,17 @@ const getResponseFromChatbot = async (req, res) => {
     );
 
     const responseContent = followupResponse.content;
-    console.log(`Generated response for session ${sessionId}:`, responseContent);
+    // console.log(`Generated response for session ${sessionId}:`, responseContent);
 
     history.addMessage(new AIMessage({ content: responseContent }));
-    console.log(`Updated message history for session ${sessionId}:`, history.getMessages());
+    // console.log(`Updated message history for session ${sessionId}:`, history.getMessages());
 
     res.status(200).json({
       success: true,
       response: responseContent,
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error while getting response from chatbot:', error);
 
     if (error.message.includes('timeout')) {
       res.status(500).json({
